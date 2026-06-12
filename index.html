@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCultivo - Agrinho 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #a5d6a7;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #1b5e20;
+        }
+
+        .resultado {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f5e9;
+            border-left: 5px solid #2e7d32;
+            display: none;
+        }
+
+        .dicas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .dica-item {
+            background: #f1f8e9;
+            padding: 1rem;
+            border-radius: 6px;
+            border-top: 4px solid #81c784;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>EcoCultivo 🌾</h1>
+        <p>Inovação e Sustentabilidade para o Agrinho 2026</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Simulador de Irrigação Inteligente</h2>
+            <p style="margin-bottom: 1rem; color: #666;">Calcule o gasto estimado de água e receba orientações de manejo sustentável.</p>
+            
+            <div class="form-group">
+                <label for="cultura">Selecione a Cultura:</label>
+                <select id="cultura">
+                    <option value="milho">Milho (Necessidade Média)</option>
+                    <option value="soja">Soja (Necessidade Alta)</option>
+                    <option value="hortalicas">Hortaliças (Necessidade Baixa/Frequente)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="area">Área do Plantio (em metros quadrados):</label>
+                <input type="number" id="area" placeholder="Ex: 500" min="1">
+            </div>
+
+            <button onclick="calcularSustentabilidade()">Calcular Cenário</button>
+
+            <div id="resultado" class="resultado">
+                <h3>Relatório de Consumo Estimado:</h3>
+                <p id="texto-resultado"></p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Boas Práticas Agrícolas</h2>
+            <div class="dicas-grid">
+                <div class="dica-item">
+                    <h4>Conservação do Solo</h4>
+                    <p>Utilize o plantio direto para manter a palhada no solo, reduzindo a evaporação da água e a erosão.</p>
+                </div>
+                <div class="dica-item">
+                    <h4>Rotação de Culturas</h4>
+                    <p>Alterne espécies nas mesmas áreas para quebrar o ciclo de pragas e melhorar os nutrientes da terra naturalmente.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Projeto Desenvolvido para o Concurso Agrinho 2026 | Foco em Computação e Agro Sustentável</p>
+    </footer>
+
+    <script>
+        function calcularSustentabilidade() {
+            const cultura = document.getElementById('cultura').value;
+            const area = parseFloat(document.getElementById('area').value);
+            const resultadoDiv = document.getElementById('resultado');
+            const textoResultado = document.getElementById('texto-resultado');
+
+            if (!area || area <= 0) {
+                alert('Por favor, insira uma área válida.');
+                return;
+            }
+
+            let consumoPorM2 = 0;
+            let dicaEspecifica = "";
+
+            if (cultura === 'milho') {
+                consumoPorM2 = 5; // litros fictícios por dia/m2 para o exemplo
+                dicaEspecifica = "O milho responde muito bem à irrigação por gotejamento na fase de pendoamento. Evite desperdícios por aspersão nas horas mais quentes do dia.";
+            } else if (cultura === 'soja') {
+                consumoPorM2 = 7;
+                dicaEspecifica = "A soja exige monitoramento constante da umidade do solo. Use sensores de umidade simples para acionar a irrigação apenas quando necessário.";
+            } else if (cultura === 'hortalicas') {
+                consumoPorM2 = 3;
+                dicaEspecifica = "Hortaliças se beneficiam muito do uso de mulching (cobertura plástica ou orgânica) para manter o canteiro úmido por mais tempo.";
+            }
+
+            const consumoTotal = area * consumoPorM2;
+
+            textoResultado.innerHTML = `
+                <strong>Consumo estimado de água:</strong> ${consumoTotal} litros por ciclo de rega diário.<br><br>
+                <strong>Dica de Ouro para ${cultura.toUpperCase()}:</strong> ${dicaEspecifica}
+            `;
+
+            resultadoDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
